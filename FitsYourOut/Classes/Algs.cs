@@ -12,10 +12,8 @@ namespace FitsYourOut
                     && (item.Color.Color == currentItem.Color.Color
                             || currentItem.Color.suitableColors.Contains(item.Color.Color));
                 if (condition)
-                {
                     foreach (var tag in tags)
                         condition = item.Tags.Contains(tag) && condition;
-                }
                 return condition;
             }).ToArray();
 

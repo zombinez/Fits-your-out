@@ -77,7 +77,6 @@ namespace FitsYourOut
                     e.Graphics.DrawString(matchingItems[i].Name, Font, b, 0, (Font.Height + 5) * (3 + i));
             }
             else e.Graphics.DrawString("Подходящих предметов не найдено", Font, b, 0, (Font.Height + 5) * 2);
-
         }
 
         public void Refresh(Item item)
@@ -95,7 +94,6 @@ namespace FitsYourOut
                     Algorythms.GetSuitableItemsBySingleTag(item, Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !items.Contains(e) && !selectedItems.Contains(e)), selectedTags.First()))).ToArray();
             else
                 matchingItems = items;
-
             for (var i = 0; i < matchingItems.Length; i++)
             {
                 var button = new Button();
