@@ -10,13 +10,13 @@ namespace FitsYourOut
     public partial class ItemPage : Form
     {
         private Item mainItem;
-        private Stack<Item> selectedItems;
-        private HashSet<Tags> selectedTags;
+        private readonly Stack<Item> selectedItems;
+        private readonly HashSet<Tags> selectedTags;
         private Item[] matchingItems;
         private readonly double maxPrice;
         private readonly double minPrice;
         private readonly Timer timer;
-        private List<Button> buttons;
+        private readonly List<Button> buttons;
 
         public ItemPage(Item item, double mxPrice, double mnPrice)
         {

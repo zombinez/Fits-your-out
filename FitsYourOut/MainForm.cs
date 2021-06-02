@@ -8,14 +8,14 @@ namespace FitsYourOut
 {
     public partial class MainForm : Form
     {
-        private TextBox minPriceBox;
-        private TextBox maxPriceBox;
+        private readonly TextBox minPriceBox;
+        private readonly TextBox maxPriceBox;
         private double minPrice;
         private double maxPrice;
-        private Timer timer;
+        private readonly Timer timer;
         private Item[] collection;
         private ItemPage childForm;
-        private List<Button> buttons;
+        private readonly List<Button> buttons;
 
         public MainForm()
         {
