@@ -1,12 +1,16 @@
-﻿using System;
+﻿using FitsYourOut.Classes;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace FitsYourOut
 {
-    public partial class MainForm : Form
+    public partial class MainForm : ShadowForm
     {
         private readonly TextBox minPriceBox;
         private readonly TextBox maxPriceBox;
@@ -15,18 +19,24 @@ namespace FitsYourOut
         private readonly Timer timer;
         private Item[] collection;
         private ItemPage childForm;
-        private readonly List<Button> buttons;
+        private readonly List<Card> cards;
+        public PrivateFontCollection FontCollection { get; private set; }
 
         public MainForm()
         {
             InitializeComponent();
             minPrice = 0;
             maxPrice = 0;
-            buttons = new List<Button>();
             collection = Algorythms.GetItemsCollection().Values.ToArray();
+            
+
+            FontCollection = new PrivateFontCollection();
+            FontsInitialize();
+
+            cards = new List<Card>();
 
             timer = new Timer();
-            timer.Interval = 100;
+            timer.Interval = 10;
             timer.Tick += new EventHandler(OnFrameChanged);
             timer.Enabled = true;
 
@@ -36,68 +46,79 @@ namespace FitsYourOut
             Paint += new PaintEventHandler(OnPaint);
             DoubleBuffered = true;
             MaximumSize = new Size(1280, 720);
-            minPriceBox = new TextBox();
-            minPriceBox.Location = new Point(60, 60);
-            minPriceBox.Font = new Font(FontFamily.GenericSansSerif, 30F, FontStyle.Regular);
-            minPriceBox.Width = (int)minPriceBox.Font.Size * 3;
+
+            minPriceBox = new TextBoxWithPlaceHolder("Min");
+            minPriceBox.Location = new Point(499, 157);
+            minPriceBox.Font = new Font(FontCollection.Families[6], 13f);
+            minPriceBox.Width = (int)minPriceBox.Font.Size * 6;
             minPriceBox.BorderStyle = BorderStyle.None;
-            minPriceBox.BackColor = Color.Gray;
+            minPriceBox.BackColor = Color.White;
             minPriceBox.KeyPress += new KeyPressEventHandler(Input);
             minPriceBox.KeyDown += new KeyEventHandler(DeleteChar);
             Controls.Add(minPriceBox);
 
-            maxPriceBox = new TextBox();
-            maxPriceBox.Location = new Point(minPriceBox.Location.X + minPriceBox.Width + 10, minPriceBox.Location.Y);
-            maxPriceBox.Font = new Font(FontFamily.GenericSansSerif, 30F, FontStyle.Regular);
-            maxPriceBox.Width = (int)minPriceBox.Font.Size * 3;
+            maxPriceBox = new TextBoxWithPlaceHolder("Max");
+            maxPriceBox.Location = new Point(685, 157);
+            maxPriceBox.Font = new Font(FontCollection.Families[6], 13f);
+            maxPriceBox.Width = (int)minPriceBox.Font.Size * 6;
             maxPriceBox.BorderStyle = BorderStyle.None;
-            maxPriceBox.BackColor = Color.Gray;
+            maxPriceBox.BackColor = Color.White;
             maxPriceBox.KeyPress += new KeyPressEventHandler(Input);
             maxPriceBox.KeyDown += new KeyEventHandler(DeleteChar);
             Controls.Add(maxPriceBox);
 
+            var filter = new PictureBox();
+            filter.Image = Properties.Resources.window_filter;
+            filter.Location = new Point(400, 60);
+            filter.Size = new Size(470, 190);
+            Controls.Add(filter);
+
             //Вместо кнопки сделаешь picturebox
-            var closeButton = new Button();
-            closeButton.Location = new Point(0, 60);
-            closeButton.Size = new Size(48, 48);
-            closeButton.Text = "Закрыть";
+            var closeButton = new PictureBox();
+            closeButton.Location = new Point(Size.Width - 100, Size.Height - 630);
+            closeButton.Image = Properties.Resources.close_btn2;
+            closeButton.Size = new Size(25, 25);
             closeButton.Click += new EventHandler((sender, args) => Close());
-            closeButton.BackColor = Color.Transparent;
+            closeButton.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;
             Controls.Add(closeButton);
 
-            AddButtons();
+            
+            AddCards();
+            AutoScroll = true;
+            MouseClick += (s,e) => ActiveControl = null;
+
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
         {
-            if(int.TryParse(minPriceBox.Text, out int newMinPrice) && newMinPrice != minPrice)
+            if(double.TryParse(minPriceBox.Text, out double newMinPrice) && newMinPrice != minPrice)
             {
                 minPrice = newMinPrice;
                 collection = Algorythms.GetItemsByPrice(minPrice, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveButtons();
-                AddButtons();
+                RemoveCards();
+                AddCards();
             }
             else if (minPriceBox.Text == "" && newMinPrice != minPrice)
             {
                 minPrice = 0;
                 collection = Algorythms.GetItemsByPrice(-1, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveButtons();
-                AddButtons();
+                RemoveCards();
+                AddCards();
             }
 
-            if (int.TryParse(maxPriceBox.Text, out int newMaxPrice) && newMaxPrice != maxPrice)
+            if (double.TryParse(maxPriceBox.Text, out double newMaxPrice) && newMaxPrice != maxPrice)
             {
                 maxPrice = newMaxPrice;
                 collection = Algorythms.GetItemsByPrice(minPrice, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveButtons();
-                AddButtons();
+                RemoveCards();
+                AddCards();
             }
             else if(maxPriceBox.Text == "" && newMaxPrice != maxPrice)
             {
                 maxPrice = 0;
                 collection = Algorythms.GetItemsByPrice(minPrice, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveButtons();
-                AddButtons();
+                RemoveCards();
+                AddCards();
             }
             Invalidate();
         }
@@ -122,39 +143,49 @@ namespace FitsYourOut
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-            var b = new SolidBrush(Color.Black);
-            e.Graphics.DrawString(minPrice.ToString(), Font, b, 0, 0);
-            e.Graphics.DrawString(maxPrice.ToString(), Font, b, 0, Font.Height + 5);
-            e.Graphics.DrawString(collection.Length.ToString(), Font, b, 0, (Font.Height + 5) * 2);
+
         }
 
-        public void AddButtons()
+        public void AddCards()
         {
             for (var i = 0; i < collection.Length; i++)
             {
-                //Сделаешь через PictureBox
-                var button = new Button();
-                button.Location = new Point(1100, 60 + 45 * i);
-                button.Size = new Size(120, 40);
-                button.Text = collection[i].Name;
-                button.Name = collection[i].Name;
-                button.Click += new EventHandler((sender, args) =>
+                var card = new Card(FontCollection);
+                card.Location = new Point(70 + (card.Width + 16) * (i % 4), 250 + card.Height * (i/4));
+                card.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;
+                card.Name = collection[i].Name;
+                card.ItemName = collection[i].Name;
+                card.Image = collection[i].Image;
+                card.ItemPrice = collection[i].Price;
+                card.Click += new EventHandler((sender, args) =>
                 {
-                    //У каждой карточки по нажатию должно происходить описанное ниже, но в форму передается предмет, который представляет собой эта карточка
-                    childForm = new ItemPage(collection.Where(item => item.Name == button.Name).First(), maxPrice, minPrice);
+                    childForm = new ItemPage(collection.Where(item => item.Name == card.Name).First(), maxPrice, minPrice, FontCollection);
                     childForm.ShowDialog();
                 });
-                buttons.Add(button);
-                Controls.Add(button);
+                cards.Add(card);
+                Controls.Add(card);
             }
             Invalidate();
         }
 
-        public void RemoveButtons()
+        public void RemoveCards()
         {
-            foreach (var button in buttons)
-                Controls.Remove(button);
-            buttons.Clear();
+            foreach (var c in cards)
+                Controls.Remove(c);
+            cards.Clear();
+        }
+
+        public void FontsInitialize()
+        {
+            var curDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var resources = Path.Combine(curDir, "Resources");
+            FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-Black.ttf")); //0
+            FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-BlackItalic.ttf")); //1
+            FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-Bold.ttf")); //2
+            FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-Book.ttf")); //3
+            FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-BookItalic.ttf")); //4
+            FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-Medium.ttf")); //5
+            FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-MediumItalic.ttf")); //6
         }
     }
 }

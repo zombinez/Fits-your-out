@@ -33,10 +33,27 @@ namespace FitsYourOut
         {
             return new Dictionary<string, Item>
             {
-                { "Рубашка в клетку", new Item("Рубашка в клетку", "A1", "",  new HashSet<Tags> { Tags.Casual }, 1000, ClothesType.Torso, new ClothesColorClass(ClothesColor.RRR)) },
-                { "Джинсы", new Item("Джинсы", "B2", "", new HashSet<Tags> { Tags.Casual, Tags.Sport }, 500, ClothesType.Pants, new ClothesColorClass(ClothesColor.OOG)) },
-                { "Кроссовки", new Item("Кроссовки", "C3", "", new HashSet<Tags> { Tags.Sport, Tags.Casual }, 600, ClothesType.Boots, new ClothesColorClass(ClothesColor.RRR)) },
-                { "Спортивные штаны", new Item("Спортивные штаны", "D4", "", new HashSet<Tags> { Tags.Sport }, 400, ClothesType.Pants, new ClothesColorClass(ClothesColor.OOG)) }
+                { "Зеленые Штаны", new Item("pants1",
+                "Green pants", 
+                "a1",
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et \ndolore magna aliqua. " +
+                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex \nea commodo consequat. Duis aute irure dolor " +
+                "in reprehenderit in voluptate velit esse cillum dolore \neu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
+                "sunt in culpa qui officia deserunt \nmollit anim id est laborum.",  
+                new HashSet<Tags> { Tags.Casual }, 
+                10.50, 
+                ClothesType.Pants, 
+                new ClothesColorClass(ClothesColor.GGG)) },
+                { "Джинсы", new Item("pants1","Blue Jeans", "B2", "", new HashSet<Tags> { Tags.Casual,  }, 500, ClothesType.Pants, new ClothesColorClass(ClothesColor.GGG)) },
+                { "Кроссовки", new Item("pants1","Yellow Sneakers", "C3", "", new HashSet<Tags> {Tags.Casual }, 600, ClothesType.Boots, new ClothesColorClass(ClothesColor.GGG)) },
+                { "Спортивные штаны", new Item("pants1","Sport pants", "D4", "", new HashSet<Tags> { Tags.Casual }, 400, ClothesType.Pants, new ClothesColorClass(ClothesColor.GGG)) },
+                { "", new Item("pants1", "Hat", "E6", "", new HashSet<Tags> { Tags.Casual }, 350, ClothesType.Head, new ClothesColorClass(ClothesColor.GGG)) },
+                { "1", new Item("pants1", "1", "E6", "", new HashSet<Tags> { Tags.Casual }, 350, ClothesType.Head, new ClothesColorClass(ClothesColor.GGG)) },
+                { "2", new Item("pants1", "2", "E6", "", new HashSet<Tags> { Tags.Casual }, 350, ClothesType.Head, new ClothesColorClass(ClothesColor.GGG)) },
+                { "3", new Item("pants1", "3", "E6", "", new HashSet<Tags> { Tags.Casual }, 350, ClothesType.Head, new ClothesColorClass(ClothesColor.GGG)) },
+                { "4", new Item("pants1", "4", "E6", "", new HashSet<Tags> { Tags.Casual }, 350, ClothesType.Head, new ClothesColorClass(ClothesColor.GGG)) },
+                { "5", new Item("pants1", "5", "E6", "", new HashSet<Tags> { Tags.Casual }, 350, ClothesType.Head, new ClothesColorClass(ClothesColor.GGG)) },
+                { "6", new Item("pants1", "6", "E6", "", new HashSet<Tags> { Tags.Casual }, 350, ClothesType.Head, new ClothesColorClass(ClothesColor.GGG)) },
             };
         }
     }
