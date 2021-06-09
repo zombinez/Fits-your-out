@@ -117,4 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="card" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\card.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="card2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\card2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CircularStd_Black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CircularStd-Black.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CircularStd_BlackItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CircularStd-BlackItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CircularStd_Bold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CircularStd-Bold.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CircularStd_Book" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CircularStd-Book.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CircularStd_BookItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CircularStd-BookItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CircularStd_Medium" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CircularStd-Medium.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="CircularStd_MediumItalic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\CircularStd-MediumItalic.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="close_btn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close_btn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="close_btn2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\close_btn2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="filter_parameter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter_parameter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="itemshadow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\itemshadow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pants1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\pants1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="window_filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\window_filter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
