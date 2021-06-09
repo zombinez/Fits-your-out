@@ -28,7 +28,6 @@ namespace FitsYourOut
             minPrice = 0;
             maxPrice = 0;
             collection = Algorythms.GetItemsCollection().Values.ToArray();
-            
 
             FontCollection = new PrivateFontCollection();
             FontsInitialize();
