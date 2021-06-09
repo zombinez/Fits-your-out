@@ -34,9 +34,9 @@ namespace FitsYourOut
         public readonly string Articul;
         public readonly string Description;
 
-        public Item(string image,string name, string articul, string description, HashSet<Tags> tags, double price, ClothesType type, ClothesColorClass color)
+        public Item(string name, string articul, string description, HashSet<Tags> tags, double price, ClothesType type, ClothesColorClass color)
         {
-            Image = (Image)Properties.Resources.ResourceManager.GetObject(image);
+            //Image = (Image)Properties.Resources.ResourceManager.GetObject(name);
             Name = name;
             Tags = tags;
             Price = price;

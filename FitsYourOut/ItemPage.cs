@@ -1,9 +1,7 @@
-﻿using FitsYourOut.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -18,19 +16,16 @@ namespace FitsYourOut
         private readonly double maxPrice;
         private readonly double minPrice;
         private readonly Timer timer;
-        private readonly List<SuitableItem> suitableItems;
-        public PrivateFontCollection Fonts { get; set; }
+        private readonly List<Button> buttons;
 
-        public readonly Font Bold;
-
-        public ItemPage(Item item, double mxPrice, double mnPrice, PrivateFontCollection fontfamily)
+        public ItemPage(Item item, double mxPrice, double mnPrice)
         {
             InitializeComponent();
             maxPrice = mxPrice == 0 ? double.MaxValue : mxPrice;
             minPrice = mnPrice;
             selectedTags = new HashSet<Tags>();
             selectedItems = new Stack<Item>();
-            suitableItems = new List<SuitableItem>();
+            buttons = new List<Button>();
             Refresh(item);
 
             timer = new Timer();
@@ -38,9 +33,6 @@ namespace FitsYourOut
             timer.Tick += new EventHandler(OnFrameChanged);
             timer.Enabled = true;
 
-            //AutoScroll = true;
-            Fonts = fontfamily;
-            Bold = new Font(Fonts.Families[0], 48);
             Size = new Size(1280, 720);
             FormBorderStyle = FormBorderStyle.None;
             StartPosition = FormStartPosition.CenterScreen;
@@ -48,12 +40,11 @@ namespace FitsYourOut
             DoubleBuffered = true;
             MaximumSize = new Size(1280, 720);
             
-            var backButton = new PictureBox();
-            backButton.Location = new Point(56, 56);
-            backButton.Image = Properties.Resources.close_btn;
-            backButton.Size = new Size(backButton.Image.Width - 35, backButton.Image.Height);
-            backButton.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;
-            backButton.MouseEnter += BackButton_MouseEnter;
+            //Сделай picturebox
+            var backButton = new Button();
+            backButton.Location = new Point(60, 60);
+            backButton.Size = new Size(40, 40);
+            backButton.Text = "Вернуться";
             backButton.Click += new EventHandler((sender, args) => 
             {
                 if(selectedItems.Count == 0)
@@ -68,11 +59,6 @@ namespace FitsYourOut
             Invalidate();
         }
 
-        private void BackButton_MouseEnter(object sender, EventArgs e)
-        {
-            
-        }
-
         private void OnFrameChanged(object sender, EventArgs e)
         {
             Invalidate();
@@ -80,24 +66,24 @@ namespace FitsYourOut
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-            e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-
-            var g = e.Graphics;
-
-            g.DrawImage(Properties.Resources.itemshadow, 20, 65, 405, 610);
-            g.DrawImage(mainItem.Image, 55, 100, 335, 540);
-            g.DrawString(mainItem.Name, new Font(Fonts.Families[0], 48), new SolidBrush(Color.Black), new Point(422, 110));
-            g.DrawString(mainItem.Description, new Font(Fonts.Families[3], 12), new SolidBrush(Color.Black), new Point(432, 177));
-            g.DrawString(mainItem.Articul, new Font(Fonts.Families[0], 10), new SolidBrush(Color.Gray), new Point(450 + mainItem.Name.Length * ((int)Bold.Size - 15), 151));
-            g.DrawString($"{mainItem.Price}$", new Font(Fonts.Families[0], 25), new SolidBrush(Color.Black), new Point(1118, 128));
-            g.DrawString("Suitable items", new Font(Fonts.Families[0], 14), new SolidBrush(Color.Black), new Point(755, 325));
+            //Это все можешь удалить, это чисто для демонстрации того, что алгоритмы написаны правильно
+            var b = new SolidBrush(Color.Black);
+            e.Graphics.DrawString($"Минимальная цена: {minPrice}", Font, b, 0, 0);
+            e.Graphics.DrawString($"Максимальная цена: {maxPrice}", Font, b, 0, Font.Height + 5);
+            if(matchingItems.Length > 0)
+            {
+                e.Graphics.DrawString("Подобранные предметы:", Font, b, 0, (Font.Height + 5) * 2);
+                for (var i = 0; i < matchingItems.Length; i++)
+                    e.Graphics.DrawString(matchingItems[i].Name, Font, b, 0, (Font.Height + 5) * (3 + i));
+            }
+            else e.Graphics.DrawString("Подходящих предметов не найдено", Font, b, 0, (Font.Height + 5) * 2);
         }
 
         public void Refresh(Item item)
         {
-            foreach (var button in suitableItems)
+            foreach (var button in buttons)
                 Controls.Remove(button);
-            suitableItems.Clear();
+            buttons.Clear();
             mainItem = item;
             foreach (var tag in item.Tags)
                 if (!selectedTags.Contains(tag))
@@ -108,23 +94,21 @@ namespace FitsYourOut
                     Algorythms.GetSuitableItemsBySingleTag(item, Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !items.Contains(e) && !selectedItems.Contains(e)), selectedTags.First()))).ToArray();
             else
                 matchingItems = items;
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < matchingItems.Length; i++)
             {
-                var suitableItem = new SuitableItem(matchingItems[i]);
-                suitableItem.Location = new Point(422 + (suitableItem.Width) * i, 345);
-                suitableItem.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;
-                suitableItem.Text = matchingItems[i].Name;
-                suitableItem.Name = matchingItems[i].Name;
-
-                suitableItem.Click += new EventHandler((sender, args) =>
+                var button = new Button();
+                button.Location = new Point(1100, 60 + 45 * i);
+                button.Size = new Size(40, 40);
+                button.Text = matchingItems[i].Name;
+                button.Name = matchingItems[i].Name;
+                button.Click += new EventHandler((sender, args) =>
                 {
                     //У карточек подходящих предметов должно быть такое поведение, но передается предмет из карточки
                     selectedItems.Push(mainItem);
-                    Refresh(suitableItem.Item);
+                    Refresh(matchingItems.Where(currentItem => currentItem.Name == button.Name).First());
                 });
-                suitableItems.Add(suitableItem);
-                Controls.Add(suitableItem);
-                
+                buttons.Add(button);
+                Controls.Add(button);
             }
             Invalidate();
         }
