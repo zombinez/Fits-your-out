@@ -42,6 +42,17 @@
         GBB = 9,
         BBB = 10,
         BBR = 11,
-        BRR = 12
+        BRR = 12,
+        WWW = 13,
+        WWBL = 14,
+        WBLBL = 15,
+        BLBLBL = 16
+    }
+
+    public enum Gender
+    {
+        Male = 0,
+        Female = 1,
+        All = 2
     }
 }

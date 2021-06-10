@@ -53,7 +53,6 @@ namespace FitsYourOut
             backButton.Image = Properties.Resources.close_btn;
             backButton.Size = new Size(backButton.Image.Width - 35, backButton.Image.Height);
             backButton.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;
-            backButton.MouseEnter += BackButton_MouseEnter;
             backButton.Click += new EventHandler((sender, args) => 
             {
                 if(selectedItems.Count == 0)
@@ -66,11 +65,6 @@ namespace FitsYourOut
             backButton.BackColor = Color.Transparent;
             Controls.Add(backButton);
             Invalidate();
-        }
-
-        private void BackButton_MouseEnter(object sender, EventArgs e)
-        {
-            
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -88,9 +82,9 @@ namespace FitsYourOut
             g.DrawImage(mainItem.Image, 55, 100, 335, 540);
             g.DrawString(mainItem.Name, new Font(Fonts.Families[0], 48), new SolidBrush(Color.Black), new Point(422, 110));
             g.DrawString(mainItem.Description, new Font(Fonts.Families[3], 12), new SolidBrush(Color.Black), new Point(432, 177));
-            g.DrawString(mainItem.Articul, new Font(Fonts.Families[0], 10), new SolidBrush(Color.Gray), new Point(450 + mainItem.Name.Length * ((int)Bold.Size - 15), 151));
+            g.DrawString(mainItem.Articul, new Font(Fonts.Families[0], 10), new SolidBrush(Color.Gray), new Point(434, 98));
             g.DrawString($"{mainItem.Price}$", new Font(Fonts.Families[0], 25), new SolidBrush(Color.Black), new Point(1118, 128));
-            g.DrawString("Suitable items", new Font(Fonts.Families[0], 14), new SolidBrush(Color.Black), new Point(755, 325));
+            g.DrawString("Suitable items", new Font(Fonts.Families[0], 14), new SolidBrush(Color.Black), new Point(759, 325));
         }
 
         public void Refresh(Item item)
@@ -102,14 +96,16 @@ namespace FitsYourOut
             foreach (var tag in item.Tags)
                 if (!selectedTags.Contains(tag))
                     selectedTags.Add(tag);
-            var items = Algorythms.GetItemsByPrice(minPrice, maxPrice, item.GetSuitableItems(Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !selectedItems.Contains(e)), selectedTags));
-            if (items.Length < 3)
+            var items = Algorythms.GetItemsByPrice(minPrice, maxPrice, item.GetSuitableItems(Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !selectedItems.Contains(e)), selectedTags)).GetItemsByGender(mainItem.Gender);
+            if (items.Length < 4)
                 matchingItems = items.Concat(Algorythms.GetItemsByPrice(minPrice, maxPrice,
-                    Algorythms.GetSuitableItemsBySingleTag(item, Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !items.Contains(e) && !selectedItems.Contains(e)), selectedTags.First()))).ToArray();
+                    Algorythms.GetSuitableItemsBySingleTag(item, Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !items.Contains(e) && !selectedItems.Contains(e)), selectedTags.First()))).GetItemsByGender(mainItem.Gender);
             else
                 matchingItems = items;
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < matchingItems.Length; i++)
             {
+                if (i == 4)
+                    break;
                 var suitableItem = new SuitableItem(matchingItems[i]);
                 suitableItem.Location = new Point(422 + (suitableItem.Width) * i, 345);
                 suitableItem.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;

@@ -16,6 +16,7 @@ namespace FitsYourOut
         private readonly TextBox maxPriceBox;
         private double minPrice;
         private double maxPrice;
+        private Gender gender;
         private readonly Timer timer;
         private Item[] collection;
         private ItemPage childForm;
@@ -25,9 +26,10 @@ namespace FitsYourOut
         public MainForm()
         {
             InitializeComponent();
+            gender = Gender.All;
             minPrice = 0;
             maxPrice = 0;
-            collection = Algorythms.GetItemsCollection().Values.ToArray();
+            collection = Algorythms.GetItemsCollection().Values.GetItemsByGender(gender);
 
             FontCollection = new PrivateFontCollection();
             FontsInitialize();
@@ -70,6 +72,11 @@ namespace FitsYourOut
             filter.Image = Properties.Resources.window_filter;
             filter.Location = new Point(400, 60);
             filter.Size = new Size(470, 190);
+            filter.Click += new EventHandler((sender, args) => 
+            {
+                gender = (Gender)(((int)gender + 1) % 3);
+                RefreshItems();
+            });
             Controls.Add(filter);
 
             //Вместо кнопки сделаешь picturebox
@@ -80,12 +87,10 @@ namespace FitsYourOut
             closeButton.Click += new EventHandler((sender, args) => Close());
             closeButton.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;
             Controls.Add(closeButton);
-
             
             AddCards();
             AutoScroll = true;
             MouseClick += (s,e) => ActiveControl = null;
-
         }
 
         private void OnFrameChanged(object sender, EventArgs e)
@@ -93,31 +98,23 @@ namespace FitsYourOut
             if(double.TryParse(minPriceBox.Text, out double newMinPrice) && newMinPrice != minPrice)
             {
                 minPrice = newMinPrice;
-                collection = Algorythms.GetItemsByPrice(minPrice, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveCards();
-                AddCards();
+                RefreshItems();
             }
             else if (minPriceBox.Text == "" && newMinPrice != minPrice)
             {
                 minPrice = 0;
-                collection = Algorythms.GetItemsByPrice(-1, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveCards();
-                AddCards();
+                RefreshItems();
             }
 
             if (double.TryParse(maxPriceBox.Text, out double newMaxPrice) && newMaxPrice != maxPrice)
             {
                 maxPrice = newMaxPrice;
-                collection = Algorythms.GetItemsByPrice(minPrice, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveCards();
-                AddCards();
+                RefreshItems();
             }
             else if(maxPriceBox.Text == "" && newMaxPrice != maxPrice)
             {
                 maxPrice = 0;
-                collection = Algorythms.GetItemsByPrice(minPrice, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values);
-                RemoveCards();
-                AddCards();
+                RefreshItems();
             }
             Invalidate();
         }
@@ -142,7 +139,6 @@ namespace FitsYourOut
 
         private void OnPaint(object sender, PaintEventArgs e)
         {
-
         }
 
         public void AddCards()
@@ -185,6 +181,13 @@ namespace FitsYourOut
             FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-BookItalic.ttf")); //4
             FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-Medium.ttf")); //5
             FontCollection.AddFontFile(Path.Combine(resources, "CircularStd-MediumItalic.ttf")); //6
+        }
+
+        public void RefreshItems()
+        {
+            collection = Algorythms.GetItemsByPrice(minPrice, maxPrice == 0 ? double.MaxValue : maxPrice, Algorythms.GetItemsCollection().Values).GetItemsByGender(gender);
+            RemoveCards();
+            AddCards();
         }
     }
 }

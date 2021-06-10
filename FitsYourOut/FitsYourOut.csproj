@@ -136,5 +136,50 @@
   <ItemGroup>
     <None Include="Resources\window_filter.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\a1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\c3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\d4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\e6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\f6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\g6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\h6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\i6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\j6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\k6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\l6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\m6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\n6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\o6.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
