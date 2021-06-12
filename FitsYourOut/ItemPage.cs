@@ -98,8 +98,12 @@ namespace FitsYourOut
                     selectedTags.Add(tag);
             var items = Algorythms.GetItemsByPrice(minPrice, maxPrice, item.GetSuitableItems(Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !selectedItems.Contains(e)), selectedTags)).GetItemsByGender(mainItem.Gender);
             if (items.Length < 4)
-                matchingItems = items.Concat(Algorythms.GetItemsByPrice(minPrice, maxPrice,
-                    Algorythms.GetSuitableItemsBySingleTag(item, Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !items.Contains(e) && !selectedItems.Contains(e)), selectedTags.First()))).GetItemsByGender(mainItem.Gender);
+            {
+                var additionalItems = Algorythms.GetItemsByPrice(minPrice, maxPrice,
+                    Algorythms.GetSuitableItemsBySingleTag(item, Algorythms.GetItemsCollection().Values.Where(e => e != mainItem && !items.Contains(e) && !selectedItems.Contains(e)), selectedTags.First()));
+                if (additionalItems.Length > 0)
+                matchingItems = items.Concat(additionalItems).GetItemsByGender(mainItem.Gender);
+            }
             else
                 matchingItems = items;
             for (var i = 0; i < matchingItems.Length; i++)

@@ -166,6 +166,15 @@
   <data name="f6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\f6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="filter_All" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter_All.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="filter_Female" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter_Female.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="filter_Male" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\filter_Male.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="filter_parameter" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\filter_parameter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -199,10 +208,10 @@
   <data name="o6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\o6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="p6" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\p6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pants1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\pants1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="window_filter" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\window_filter.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -223,6 +223,36 @@ namespace FitsYourOut.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap filter_All {
+            get {
+                object obj = ResourceManager.GetObject("filter_All", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap filter_Female {
+            get {
+                object obj = ResourceManager.GetObject("filter_Female", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap filter_Male {
+            get {
+                object obj = ResourceManager.GetObject("filter_Male", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap filter_parameter {
             get {
                 object obj = ResourceManager.GetObject("filter_parameter", resourceCulture);
@@ -333,9 +363,9 @@ namespace FitsYourOut.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pants1 {
+        internal static System.Drawing.Bitmap p6 {
             get {
-                object obj = ResourceManager.GetObject("pants1", resourceCulture);
+                object obj = ResourceManager.GetObject("p6", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -343,9 +373,9 @@ namespace FitsYourOut.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap window_filter {
+        internal static System.Drawing.Bitmap pants1 {
             get {
-                object obj = ResourceManager.GetObject("window_filter", resourceCulture);
+                object obj = ResourceManager.GetObject("pants1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

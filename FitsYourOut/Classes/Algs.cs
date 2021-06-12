@@ -6,7 +6,8 @@ namespace FitsYourOut
     public static class Algorythms
     {
         public static Item[] GetSuitableItems(this Item currentItem, IEnumerable<Item> collection, IEnumerable<Tags> tags) =>
-            collection.Where(item =>
+            collection.Any() 
+            ? collection.Where(item =>
             {
                 var condition = currentItem.Type != item.Type
                     && (currentItem.Color.suitableColors.Contains(item.Color.Color) || item.Type == ClothesType.Accesouries);
@@ -14,21 +15,26 @@ namespace FitsYourOut
                     foreach (var tag in tags)
                         condition = item.Tags.Contains(tag) && condition;
                 return condition;
-            }).ToArray();
+            }).ToArray() 
+            : new Item[0];
 
         public static Item[] GetItemsByPrice(double minPrice, double maxPrice, IEnumerable<Item> collection) =>
-            collection.Where(item => item.Price <= maxPrice && item.Price >= minPrice).ToArray();
+            collection.Any() 
+            ? collection.Where(item => item.Price <= maxPrice && item.Price >= minPrice).ToArray() 
+            : new Item[0];
 
         public static Item[] GetItemsByGender(this IEnumerable<Item> collection, Gender gender) =>
-            collection.Where(item => gender == Gender.All || item.Gender == gender).ToArray();
+            collection.Any() ? collection.Where(item => gender == Gender.All || item.Gender == gender).ToArray() : new Item[0];
 
         public static Item[] GetSuitableItemsBySingleTag(this Item currentItem, IEnumerable<Item> collection, Tags tag) =>
-            collection.Where(item =>
+            collection.Any() 
+            ? collection.Where(item =>
             {
                 var condition = currentItem.Type != item.Type
                     && (item.Tags.Contains(tag) || item.Type == ClothesType.Accesouries);
                 return condition;
-            }).ToArray();
+            }).ToArray() 
+            : new Item[0];
 
         public static Dictionary<string, Item> GetItemsCollection()
         {
@@ -164,8 +170,8 @@ namespace FitsYourOut
                 { "n6", new Item(
                 "Polarized glasses",
                 "n6",
-                "Metal sunglasses with UV-resistant polarized lenses. The sunglasses are sold in a fabric drawstring case. \nMaterials:\n - Metal 66%,\n - Plastic 34%. \nWeight - 35 g.",
-                new HashSet<Tags>(),
+                "Metal sunglasses with UV-resistant polarized lenses. The sunglasses are sold in a fabric \ndrawstring case. \nMaterials:\n - Metal 66%,\n - Plastic 34%. \nWeight - 35 g.",
+                new HashSet<Tags>() { Tags.Casual, Tags.Sport },
                 14.00, ClothesType.Accesouries,
                 new ClothesColorClass(ClothesColor.BLBLBL),
                 Gender.Male) },
@@ -173,11 +179,20 @@ namespace FitsYourOut
                 { "o6", new Item(
                 "Shopper",
                 "o6",
-                "Metal sunglasses with UV-resistant polarized lenses. The sunglasses are sold in a fabric drawstring case. \nMaterials:\n - Metal 66%,\n - Plastic 34%. \nWeight - 35 g.",
-                new HashSet<Tags>(),
-                14.00, ClothesType.Accesouries,
-                new ClothesColorClass(ClothesColor.WWW),
+                "Faux leather shopper. Adjustable handles with metal buckles at the top, tab closure on the \ninside. \nWidth 37 cm. Depth 11 cm. \nMaterials:\n - Polyester 100%,\n - Polyurethane 100% (Coating).",
+                new HashSet<Tags>() { Tags.Casual, Tags.Romantic },
+                9.99, ClothesType.Accesouries,
+                new ClothesColorClass(ClothesColor.GBB),
                 Gender.Female) },
+
+                { "p6", new Item(
+                "Trainers",
+                "p6",
+                "Cotton canvas trainers with imitation leather and imitation suede details. Tongue and lacing \nat the front. \nMaterials:\n - Cotton 100%,\n - Rubber 100% (Sole).",
+                new HashSet<Tags> { Tags.Sport, Tags.Casual },
+                20.00, ClothesType.Boots,
+                new ClothesColorClass(ClothesColor.WWBL),
+                Gender.Male) },
             };
         }
     }

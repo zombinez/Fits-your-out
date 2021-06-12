@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Classes\Algs.cs" />
     <Compile Include="Classes\Animation.cs" />
-    <Compile Include="Classes\Animator.cs" />
     <Compile Include="Classes\Card.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -134,9 +133,6 @@
     <None Include="Resources\itemshadow.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\window_filter.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\a1.png" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +173,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\n6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter_All.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter_Female.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter_Male.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\p6.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\o6.png" />

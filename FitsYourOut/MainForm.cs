@@ -37,7 +37,7 @@ namespace FitsYourOut
             cards = new List<Card>();
 
             timer = new Timer();
-            timer.Interval = 10;
+            timer.Interval = 100;
             timer.Tick += new EventHandler(OnFrameChanged);
             timer.Enabled = true;
 
@@ -49,7 +49,7 @@ namespace FitsYourOut
             MaximumSize = new Size(1280, 720);
 
             minPriceBox = new TextBoxWithPlaceHolder("Min");
-            minPriceBox.Location = new Point(499, 157);
+            minPriceBox.Location = new Point(565, 145);
             minPriceBox.Font = new Font(FontCollection.Families[6], 13f);
             minPriceBox.Width = (int)minPriceBox.Font.Size * 6;
             minPriceBox.BorderStyle = BorderStyle.None;
@@ -59,7 +59,7 @@ namespace FitsYourOut
             Controls.Add(minPriceBox);
 
             maxPriceBox = new TextBoxWithPlaceHolder("Max");
-            maxPriceBox.Location = new Point(685, 157);
+            maxPriceBox.Location = new Point(691, 145);
             maxPriceBox.Font = new Font(FontCollection.Families[6], 13f);
             maxPriceBox.Width = (int)minPriceBox.Font.Size * 6;
             maxPriceBox.BorderStyle = BorderStyle.None;
@@ -69,12 +69,14 @@ namespace FitsYourOut
             Controls.Add(maxPriceBox);
 
             var filter = new PictureBox();
-            filter.Image = Properties.Resources.window_filter;
+            filter.BackColor = Color.Transparent;
+            filter.Image = Properties.Resources.filter_All;
             filter.Location = new Point(400, 60);
             filter.Size = new Size(470, 190);
             filter.Click += new EventHandler((sender, args) => 
             {
                 gender = (Gender)(((int)gender + 1) % 3);
+                filter.Image = (Image)Properties.Resources.ResourceManager.GetObject($"filter_{gender}");
                 RefreshItems();
             });
             Controls.Add(filter);
@@ -146,6 +148,7 @@ namespace FitsYourOut
             for (var i = 0; i < collection.Length; i++)
             {
                 var card = new Card(FontCollection);
+                card.BackColor = Color.Transparent;
                 card.Location = new Point(70 + (card.Width + 16) * (i % 4), 250 + card.Height * (i/4));
                 card.MouseMove += (s, e) => Cursor.Current = Cursors.Hand;
                 card.Name = collection[i].Name;
